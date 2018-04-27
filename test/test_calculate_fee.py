@@ -15,7 +15,7 @@ sys.path.append(root)
 
 # ------------------------------------------------------------------------------
 
-import ccxt  # noqa: E402
+import anyex  # noqa: E402
 
 # ------------------------------------------------------------------------------
 
@@ -33,7 +33,7 @@ market = {
     'maker': maker,
 }
 
-exchange = ccxt.Exchange({
+exchange = anyex.Exchange({
     'id': 'mock',
     'markets': {'FOO/BAR': market},
 })

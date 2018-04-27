@@ -16,7 +16,7 @@ sys.path.append(root)
 
 # ------------------------------------------------------------------------------
 
-import ccxt  # noqa: E402
+import anyex  # noqa: E402
 
 # ------------------------------------------------------------------------------
 
@@ -48,7 +48,7 @@ values = [
     }
 ]
 
-pprint(ccxt.Exchange.deep_extend(*values))
+pprint(anyex.Exchange.deep_extend(*values))
 
 # assert.deepEqual ({
 #     a: 1,

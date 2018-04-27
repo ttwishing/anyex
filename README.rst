@@ -1,11 +1,11 @@
-CCXT – CryptoCurrency eXchange Trading Library
+anyex – ANY EXchange trading library
 ==============================================
 
 |Build Status| |npm| |PyPI| |NPM Downloads| |NSP Status| |Gitter| |Supported Exchanges| |Open Collective|
 
 A JavaScript / Python / PHP library for cryptocurrency trading and e-commerce with support for many bitcoin/ether/altcoin exchange markets and merchant APIs.
 
-The **CCXT** library is used to connect and trade with cryptocurrency / altcoin exchanges and payment processing services worldwide. It provides quick access to market data for storage, analysis, visualization, indicator development, algorithmic trading, strategy backtesting, bot programming, webshop integration and related software engineering.
+The **anyex** library is used to connect and trade with cryptocurrency / altcoin exchanges and payment processing services worldwide. It provides quick access to market data for storage, analysis, visualization, indicator development, algorithmic trading, strategy backtesting, bot programming, webshop integration and related software engineering.
 
 It is intended to be used by **coders, developers, technically-skilled traders, data-scientists and financial analysts** for building trading algorithms on top of it.
 
@@ -18,12 +18,12 @@ Current feature list:
 -  an out-of-the box unified all-in-one API extremely easy to integrate
 -  works in Node 7.6+, Python 2 and 3, PHP 5.3+, web browsers
 
-`ccxt on GitHub <https://github.com/ccxt/ccxt>`__ | Install | Usage | `Manual <https://github.com/ccxt/ccxt/wiki>`__ | `Examples <https://github.com/ccxt/ccxt/tree/master/examples>`__ | `Changelog <https://github.com/ccxt/ccxt/blob/master/CHANGELOG.md>`__ | `Contributing <https://github.com/ccxt/ccxt/blob/master/CONTRIBUTING.md>`__
+`anyex on GitHub <https://github.com/anyex/anyex>`__ | Install | Usage | `Manual <https://github.com/anyex/anyex/wiki>`__ | `Examples <https://github.com/anyex/anyex/tree/master/examples>`__ | `Changelog <https://github.com/anyex/anyex/blob/master/CHANGELOG.md>`__ | `Contributing <https://github.com/anyex/anyex/blob/master/CONTRIBUTING.md>`__
 
 Supported Cryptocurrency Exchange Markets
 -----------------------------------------
 
-The ccxt library currently supports the following 114 cryptocurrency exchange markets and trading APIs:
+The anyex library currently supports the following 114 cryptocurrency exchange markets and trading APIs:
 
 +----------------------+----------------------------------------------------------------+-------+---------------------------------------------------------------------------------------------------+--------------------------------------------+
 | id                   | name                                                           | ver   | doc                                                                                               | countries                                  |
@@ -257,89 +257,89 @@ The ccxt library currently supports the following 114 cryptocurrency exchange ma
 | zb                   | `ZB <https://www.zb.com>`__                                    | 1     | `API <https://www.zb.com/i/developer>`__                                                          | China                                      |
 +----------------------+----------------------------------------------------------------+-------+---------------------------------------------------------------------------------------------------+--------------------------------------------+
 
-The list above is updated frequently, new crypto markets, altcoin exchanges, bug fixes, API endpoints are introduced and added on a regular basis. See the `Manual <https://github.com/ccxt/ccxt/wiki>`__ for details. If you don't find a cryptocurrency exchange market in the list above and/or want another exchange to be added, post or send us a link to it by opening an issue here on GitHub or via email.
+The list above is updated frequently, new crypto markets, altcoin exchanges, bug fixes, API endpoints are introduced and added on a regular basis. See the `Manual <https://github.com/anyex/anyex/wiki>`__ for details. If you don't find a cryptocurrency exchange market in the list above and/or want another exchange to be added, post or send us a link to it by opening an issue here on GitHub or via email.
 
-The library is under `MIT license <https://github.com/ccxt/ccxt/blob/master/LICENSE.txt>`__, that means it's absolutely free for any developer to build commercial and opensource software on top of it, but use it at your own risk with no warranties, as is.
+The library is under `MIT license <https://github.com/anyex/anyex/blob/master/LICENSE.txt>`__, that means it's absolutely free for any developer to build commercial and opensource software on top of it, but use it at your own risk with no warranties, as is.
 
 Install
 -------
 
-The easiest way to install the ccxt library is to use builtin package managers:
+The easiest way to install the anyex library is to use builtin package managers:
 
--  `ccxt in **NPM** <http://npmjs.com/package/ccxt>`__ (JavaScript / Node v7.6+)
--  `ccxt in **PyPI** <https://pypi.python.org/pypi/ccxt>`__ (Python 2 and 3.5.3+)
--  `ccxt in **Packagist/Composer** <https://packagist.org/packages/ccxt/ccxt>`__ (PHP 5.3+)
+-  `anyex in **NPM** <http://npmjs.com/package/anyex>`__ (JavaScript / Node v7.6+)
+-  `anyex in **PyPI** <https://pypi.python.org/pypi/anyex>`__ (Python 2 and 3.5.3+)
+-  `anyex in **Packagist/Composer** <https://packagist.org/packages/anyex/anyex>`__ (PHP 5.3+)
 
 This library is shipped as an all-in-one module implementation with minimalistic dependencies and requirements:
 
--  ```js/`` <https://github.com/ccxt/ccxt/blob/master/js/>`__ in JavaScript
--  ```python/`` <https://github.com/ccxt/ccxt/blob/master/python/>`__ in Python (generated from JS)
--  ```php/`` <https://github.com/ccxt/ccxt/blob/master/php/>`__ in PHP (generated from JS)
+-  ```js/`` <https://github.com/anyex/anyex/blob/master/js/>`__ in JavaScript
+-  ```python/`` <https://github.com/anyex/anyex/blob/master/python/>`__ in Python (generated from JS)
+-  ```php/`` <https://github.com/anyex/anyex/blob/master/php/>`__ in PHP (generated from JS)
 
-You can also clone it into your project directory from `ccxt GitHub repository <https://github.com/ccxt/ccxt>`__:
+You can also clone it into your project directory from `anyex GitHub repository <https://github.com/anyex/anyex>`__:
 
 .. code:: shell
 
-    git clone https://github.com/ccxt/ccxt.git
+    git clone https://github.com/anyex/anyex.git
 
 An alternative way of installing this library into your code is to copy a single file manually into your working directory with language extension appropriate for your environment.
 
 JavaScript (NPM)
 ~~~~~~~~~~~~~~~~
 
-JavaScript version of CCXT works both in Node and web browsers. Requires ES6 and ``async/await`` syntax support (Node 7.6.0+). When compiling with Webpack and Babel, make sure it is `not excluded <https://github.com/ccxt/ccxt/issues/225#issuecomment-331905178>`__ in your ``babel-loader`` config.
+JavaScript version of anyex works both in Node and web browsers. Requires ES6 and ``async/await`` syntax support (Node 7.6.0+). When compiling with Webpack and Babel, make sure it is `not excluded <https://github.com/anyex/anyex/issues/225#issuecomment-331905178>`__ in your ``babel-loader`` config.
 
-`ccxt in **NPM** <http://npmjs.com/package/ccxt>`__
+`anyex in **NPM** <http://npmjs.com/package/anyex>`__
 
 .. code:: shell
 
-    npm install ccxt
+    npm install anyex
 
 .. code:: javascript
 
-    var ccxt = require ('ccxt')
+    var anyex = require ('anyex')
 
-    console.log (ccxt.exchanges) // print all available exchanges
+    console.log (anyex.exchanges) // print all available exchanges
 
 JavaScript (for use with the ``<script>`` tag):
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`All-in-one browser bundle <https://unpkg.com/ccxt>`__ (dependencies included), served from `unpkg CDN <https://unpkg.com/>`__, which is a fast, global content delivery network for everything on NPM.
+`All-in-one browser bundle <https://unpkg.com/anyex>`__ (dependencies included), served from `unpkg CDN <https://unpkg.com/>`__, which is a fast, global content delivery network for everything on NPM.
 
 .. code:: html
 
-    <script type="text/javascript" src="https://unpkg.com/ccxt"></script>
+    <script type="text/javascript" src="https://unpkg.com/anyex"></script>
 
-Creates a global ``ccxt`` object:
+Creates a global ``anyex`` object:
 
 .. code:: javascript
 
-    console.log (ccxt.exchanges) // print all available exchanges
+    console.log (anyex.exchanges) // print all available exchanges
 
 Python
 ~~~~~~
 
-`ccxt in **PyPI** <https://pypi.python.org/pypi/ccxt>`__
+`anyex in **PyPI** <https://pypi.python.org/pypi/anyex>`__
 
 .. code:: shell
 
-    pip install ccxt
+    pip install anyex
 
 .. code:: python
 
-    import ccxt
-    print(ccxt.exchanges) # print a list of all available exchange classes
+    import anyex
+    print(anyex.exchanges) # print a list of all available exchange classes
 
 The library supports concurrent asynchronous mode with asyncio and async/await in Python 3.5.3+
 
 .. code:: python
 
-    import ccxt.async as ccxt # link against the asynchronous version of ccxt
+    import anyex.async as anyex # link against the asynchronous version of anyex
 
 PHP
 ~~~
 
-The ccxt library in PHP: `**``ccxt.php``** <https://raw.githubusercontent.com/ccxt/ccxt/master/ccxt.php>`__
+The anyex library in PHP: `**``anyex.php``** <https://raw.githubusercontent.com/anyex/anyex/master/anyex.php>`__
 
 It requires common PHP modules:
 
@@ -350,13 +350,13 @@ It requires common PHP modules:
 
 .. code:: php
 
-    include "ccxt.php";
-    var_dump (\ccxt\Exchange::$exchanges); // print a list of all available exchange classes
+    include "anyex.php";
+    var_dump (\anyex\Exchange::$exchanges); // print a list of all available exchange classes
 
 Documentation
 -------------
 
-Read the `Manual <https://github.com/ccxt/ccxt/wiki>`__ for more details.
+Read the `Manual <https://github.com/anyex/anyex/wiki>`__ for more details.
 
 Usage
 -----
@@ -364,7 +364,7 @@ Usage
 Intro
 ~~~~~
 
-The ccxt library consists of a public part and a private part. Anyone can use the public part out-of-the-box immediately after installation. Public APIs open access to public information from all exchange markets without registering user accounts and without having API keys.
+The anyex library consists of a public part and a private part. Anyone can use the public part out-of-the-box immediately after installation. Public APIs open access to public information from all exchange markets without registering user accounts and without having API keys.
 
 Public APIs include the following:
 
@@ -392,7 +392,7 @@ Private APIs allow the following:
 
 This library implements full public and private REST APIs for all exchanges. WebSocket and FIX implementations in JavaScript, PHP, Python and other languages coming soon.
 
-The ccxt library supports both camelcase notation (preferred in JavaScript) and underscore notation (preferred in Python and PHP), therefore all methods can be called in either notation or coding style in any language.
+The anyex library supports both camelcase notation (preferred in JavaScript) and underscore notation (preferred in Python and PHP), therefore all methods can be called in either notation or coding style in any language.
 
 ::
 
@@ -400,7 +400,7 @@ The ccxt library supports both camelcase notation (preferred in JavaScript) and 
     exchange.methodName ()  // camelcase pseudocode
     exchange.method_name () // underscore pseudocode
 
-Read the `Manual <https://github.com/ccxt/ccxt/wiki>`__ for more details.
+Read the `Manual <https://github.com/anyex/anyex/wiki>`__ for more details.
 
 JavaScript
 ~~~~~~~~~~
@@ -408,13 +408,13 @@ JavaScript
 .. code:: javascript
 
     'use strict';
-    const ccxt = require ('ccxt');
+    const anyex = require ('anyex');
 
     (async function () {
-        let kraken    = new ccxt.kraken ()
-        let bitfinex  = new ccxt.bitfinex ({ verbose: true })
-        let huobi     = new ccxt.huobi ()
-        let okcoinusd = new ccxt.okcoinusd ({
+        let kraken    = new anyex.kraken ()
+        let bitfinex  = new anyex.bitfinex ({ verbose: true })
+        let huobi     = new anyex.huobi ()
+        let okcoinusd = new anyex.okcoinusd ({
             apiKey: 'YOUR_PUBLIC_API_KEY',
             secret: 'YOUR_SECRET_PRIVATE_KEY',
         })
@@ -447,12 +447,12 @@ Python
 
     # coding=utf-8
 
-    import ccxt
+    import anyex
 
-    hitbtc = ccxt.hitbtc({'verbose': True})
-    bitmex = ccxt.bitmex()
-    huobi  = ccxt.huobi()
-    exmo   = ccxt.exmo({
+    hitbtc = anyex.hitbtc({'verbose': True})
+    bitmex = anyex.bitmex()
+    huobi  = anyex.huobi()
+    exmo   = anyex.exmo({
         'apiKey': 'YOUR_PUBLIC_API_KEY',
         'secret': 'YOUR_SECRET_PRIVATE_KEY',
     })
@@ -483,12 +483,12 @@ PHP
 
 .. code:: php
 
-    include 'ccxt.php';
+    include 'anyex.php';
 
-    $poloniex = new \ccxt\poloniex ();
-    $bittrex  = new \ccxt\bittrex  (array ('verbose' => true));
-    $quoinex  = new \ccxt\quoinex   ();
-    $zaif     = new \ccxt\zaif     (array (
+    $poloniex = new \anyex\poloniex ();
+    $bittrex  = new \anyex\bittrex  (array ('verbose' => true));
+    $quoinex  = new \anyex\quoinex   ();
+    $zaif     = new \anyex\zaif     (array (
         'apiKey' => 'YOUR_PUBLIC_API_KEY',
         'secret' => 'YOUR_SECRET_PRIVATE_KEY',
     ));
@@ -518,24 +518,24 @@ PHP
 Contributing
 ------------
 
-Please read the `CONTRIBUTING <https://github.com/ccxt/ccxt/blob/master/CONTRIBUTING.md>`__ document before making changes that you would like adopted in the code. Also, read the `Manual <https://github.com/ccxt/ccxt/wiki>`__ for more details.
+Please read the `CONTRIBUTING <https://github.com/anyex/anyex/blob/master/CONTRIBUTING.md>`__ document before making changes that you would like adopted in the code. Also, read the `Manual <https://github.com/anyex/anyex/wiki>`__ for more details.
 
 Support Developer Team
 ----------------------
 
-We are investing a significant amount of time into the development of this library. If CCXT made your life easier and you like it and want to help us improve it further or if you want to speed up new features and exchanges, please, support us with a tip. We appreciate all contributions!
+We are investing a significant amount of time into the development of this library. If anyex made your life easier and you like it and want to help us improve it further or if you want to speed up new features and exchanges, please, support us with a tip. We appreciate all contributions!
 
 Sponsors
 ~~~~~~~~
 
 Support this project by becoming a sponsor. Your logo will show up here with a link to your website.
 
-[`Become a sponsor <https://opencollective.com/ccxt#sponsor>`__]
+[`Become a sponsor <https://opencollective.com/anyex#sponsor>`__]
 
 Backers
 ~~~~~~~
 
-Thank you to all our backers! [`Become a backer <https://opencollective.com/ccxt#backer>`__]
+Thank you to all our backers! [`Become a backer <https://opencollective.com/anyex#backer>`__]
 
 Crypto
 ~~~~~~
@@ -549,22 +549,22 @@ Crypto
 
 Thank you!
 
-.. |Build Status| image:: https://travis-ci.org/ccxt/ccxt.svg?branch=master
-   :target: https://travis-ci.org/ccxt/ccxt
-.. |npm| image:: https://img.shields.io/npm/v/ccxt.svg
-   :target: https://npmjs.com/package/ccxt
-.. |PyPI| image:: https://img.shields.io/pypi/v/ccxt.svg
-   :target: https://pypi.python.org/pypi/ccxt
-.. |NPM Downloads| image:: https://img.shields.io/npm/dm/ccxt.svg
-   :target: https://www.npmjs.com/package/ccxt
-.. |NSP Status| image:: https://nodesecurity.io/orgs/ccxt/projects/856d3088-8b46-4515-9324-6b7cd2470522/badge
-   :target: https://nodesecurity.io/orgs/ccxt/projects/856d3088-8b46-4515-9324-6b7cd2470522
-.. |Gitter| image:: https://badges.gitter.im/ccxt-dev/ccxt.svg
-   :target: https://gitter.im/ccxt-dev/ccxt?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge
+.. |Build Status| image:: https://travis-ci.org/anyex/anyex.svg?branch=master
+   :target: https://travis-ci.org/anyex/anyex
+.. |npm| image:: https://img.shields.io/npm/v/anyex.svg
+   :target: https://npmjs.com/package/anyex
+.. |PyPI| image:: https://img.shields.io/pypi/v/anyex.svg
+   :target: https://pypi.python.org/pypi/anyex
+.. |NPM Downloads| image:: https://img.shields.io/npm/dm/anyex.svg
+   :target: https://www.npmjs.com/package/anyex
+.. |NSP Status| image:: https://nodesecurity.io/orgs/anyex/projects/856d3088-8b46-4515-9324-6b7cd2470522/badge
+   :target: https://nodesecurity.io/orgs/anyex/projects/856d3088-8b46-4515-9324-6b7cd2470522
+.. |Gitter| image:: https://badges.gitter.im/anyex-dev/anyex.svg
+   :target: https://gitter.im/anyex-dev/anyex?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge
 .. |Supported Exchanges| image:: https://img.shields.io/badge/exchanges-114-blue.svg
-   :target: https://github.com/ccxt/ccxt/wiki/Exchange-Markets
-.. |Open Collective| image:: https://opencollective.com/ccxt/backers/badge.svg
-   :target: https://opencollective.com/ccxt
+   :target: https://github.com/anyex/anyex/wiki/Exchange-Markets
+.. |Open Collective| image:: https://opencollective.com/anyex/backers/badge.svg
+   :target: https://opencollective.com/anyex
 .. | _1broker| image:: https://user-images.githubusercontent.com/1294454/27766021-420bd9fc-5ecb-11e7-8ed6-56d0081efed2.jpg
 .. | _1btcxe| image:: https://user-images.githubusercontent.com/1294454/27766049-2b294408-5ecc-11e7-85cc-adaff013dc1a.jpg
 .. |acx| image:: https://user-images.githubusercontent.com/1294454/30247614-1fe61c74-9621-11e7-9e8c-f1a627afa279.jpg

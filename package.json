@@ -1,15 +1,15 @@
 {
-  "name": "ccxt_python",
+  "name": "anyex",
   "version": "0.0.1",
   "description": "A JavaScript / Python / PHP cryptocurrency trading library with support for 100+ exchanges",
-  "main": "./ccxt.js",
-  "unpkg": "build/ccxt.browser.js",
+  "main": "./anyex.js",
+  "unpkg": "build/anyex.browser.js",
   "engines": {
     "node": ">=7.6.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ccxt/ccxt.git"
+    "url": "https://github.com/anyex/anyex.git"
   },
   "readme": "README.md",
   "scripts": {
@@ -27,16 +27,16 @@
     "check-python-syntax": "cd python && tox -e qa && cd ..",
     "check-php-syntax": "php -f php/test/syntax.php",
     "check-js-syntax": "eslint 'js/*.js'",
-    "browserify": "browserify --debug ./ccxt.browser.js > ./build/ccxt.browser.js",
+    "browserify": "browserify --debug ./anyex.browser.js > ./build/anyex.browser.js",
     "pandoc-python-readme": "pandoc --wrap=preserve --columns=10000 --from=markdown --to=rst --output=python/README.rst README.md",
     "pandoc-doc-readme": "pandoc --wrap=preserve --columns=10000 --from=markdown --to=rst --output=doc/README.rst README.md",
-    "pandoc-doc-manual": "pandoc --wrap=preserve --columns=10000 --from=markdown --to=rst --output=doc/manual.rst ccxt.wiki/Manual.md",
-    "pandoc-doc-install": "pandoc --wrap=preserve --columns=10000 --from=markdown --to=rst --output=doc/install.rst ccxt.wiki/Install.md",
-    "pandoc-doc-exchanges": "pandoc --wrap=preserve --columns=10000 --from=markdown --to=rst --output=doc/exchanges.rst ccxt.wiki/Exchange-Markets.md",
-    "pandoc-doc-exchanges-by-country": "pandoc --wrap=preserve --columns=10000 --from=markdown --to=rst --output=doc/exchanges-by-country.rst ccxt.wiki/Exchange-Markets-By-Country.md",
+    "pandoc-doc-manual": "pandoc --wrap=preserve --columns=10000 --from=markdown --to=rst --output=doc/manual.rst anyex.wiki/Manual.md",
+    "pandoc-doc-install": "pandoc --wrap=preserve --columns=10000 --from=markdown --to=rst --output=doc/install.rst anyex.wiki/Install.md",
+    "pandoc-doc-exchanges": "pandoc --wrap=preserve --columns=10000 --from=markdown --to=rst --output=doc/exchanges.rst anyex.wiki/Exchange-Markets.md",
+    "pandoc-doc-exchanges-by-country": "pandoc --wrap=preserve --columns=10000 --from=markdown --to=rst --output=doc/exchanges-by-country.rst anyex.wiki/Exchange-Markets-By-Country.md",
     "postinstall": "opencollective postinstall && node postinstall.js"
   },
-  "types": "./ccxt.d.ts",
+  "types": "./anyex.d.ts",
   "dependencies": {
     "cloudscraper": "1.4.1",
     "crypto-js": "3.1.9-1",
@@ -67,9 +67,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ccxt-dev/ccxt/issues"
+    "url": "https://github.com/anyex-dev/anyex/issues"
   },
-  "homepage": "https://ccxt.trade",
+  "homepage": "https://anyex.trade",
   "keywords": [
     "algorithmic",
     "algotrading",
@@ -291,7 +291,7 @@
   ],
   "collective": {
     "type": "opencollective",
-    "url": "https://opencollective.com/ccxt",
-    "logo": "https://opencollective.com/ccxt/logo.txt"
+    "url": "https://opencollective.com/anyex",
+    "logo": "https://opencollective.com/anyex/logo.txt"
   }
 }

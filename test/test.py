@@ -18,7 +18,7 @@ sys.path.append(root)
 
 # ------------------------------------------------------------------------------
 
-import ccxt  # noqa: E402
+import anyex  # noqa: E402
 
 # ------------------------------------------------------------------------------
 
@@ -47,9 +47,9 @@ exchanges = {}
 
 # ------------------------------------------------------------------------------
 
-path = os.path.dirname(ccxt.__file__)
-if 'site-packages' in os.path.dirname(ccxt.__file__):
-    raise Exception('\n\nYou are running test_async.py/test.py against a globally-installed version of the library!\nIt was previously installed into your site-packages folder by pip or pip3.\n\nTo ensure testing against the local folder uninstall it first by running the following commands:\npip uninstall ccxt\npip3 uninstall ccxt\n\n')
+path = os.path.dirname(anyex.__file__)
+if 'site-packages' in os.path.dirname(anyex.__file__):
+    raise Exception('\n\nYou are running test_async.py/test.py against a globally-installed version of the library!\nIt was previously installed into your site-packages folder by pip or pip3.\n\nTo ensure testing against the local folder uninstall it first by running the following commands:\npip uninstall anyex\npip3 uninstall anyex\n\n')
 
 # ------------------------------------------------------------------------------
 # string coloring functions
@@ -276,9 +276,9 @@ def test_exchange(exchange):
         try:
             orders = exchange.fetch_orders(symbol)
             dump(green(exchange.id), 'fetched', green(str(len(orders))), 'orders')
-        except (ccxt.ExchangeError, ccxt.NotSupported) as e:
+        except (anyex.ExchangeError, anyex.NotSupported) as e:
             dump_error(yellow('[' + type(e).__name__ + ']'), e.args)
-        # except ccxt.NotSupported as e:
+        # except anyex.NotSupported as e:
         #     dump(yellow(type(e).__name__), e.args)
 
     # time.sleep(delay)
@@ -318,17 +318,17 @@ def try_all_proxies(exchange, proxies=['']):
             current_proxy = (current_proxy + 1) % len(proxies)
             load_exchange(exchange)
             test_exchange(exchange)
-        except ccxt.RequestTimeout as e:
+        except anyex.RequestTimeout as e:
             dump_error(yellow('[' + type(e).__name__ + ']'), str(e)[0:200])
-        except ccxt.NotSupported as e:
+        except anyex.NotSupported as e:
             dump_error(yellow('[' + type(e).__name__ + ']'), str(e.args)[0:200])
-        except ccxt.DDoSProtection as e:
+        except anyex.DDoSProtection as e:
             dump_error(yellow('[' + type(e).__name__ + ']'), str(e.args)[0:200])
-        except ccxt.ExchangeNotAvailable as e:
+        except anyex.ExchangeNotAvailable as e:
             dump_error(yellow('[' + type(e).__name__ + ']'), str(e.args)[0:200])
-        except ccxt.AuthenticationError as e:
+        except anyex.AuthenticationError as e:
             dump_error(yellow('[' + type(e).__name__ + ']'), str(e)[0:200])
-        except ccxt.ExchangeError as e:
+        except anyex.ExchangeError as e:
             dump_error(yellow('[' + type(e).__name__ + ']'), str(e.args)[0:200])
         else:
             # no exception
@@ -356,8 +356,8 @@ with open(keys_file) as file:
     config = json.load(file)
 
 # instantiate all exchanges
-for id in ccxt.exchanges:
-    exchange = getattr(ccxt, id)
+for id in anyex.exchanges:
+    exchange = getattr(anyex, id)
     exchange_config = {'verbose': argv.verbose}
     if sys.version_info[0] < 3:
         exchange_config.update({'enableRateLimit': True})
