@@ -1,0 +1,17 @@
+build/*
+.DS_Store
+config.py
+dist/
+ccxt.egg-info/
+tmp/
+*.pyc
+.tox/
+coverage
+.nyc_output
+travis-keys.sh
+ccxt.wiki/
+.idea
+yarn.lock
+keys.local.json
+nbproject/
+vendor/
