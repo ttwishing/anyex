@@ -41,7 +41,8 @@ class bitmex (Exchange):
             'urls': {
                 'test': 'https://testnet.bitmex.com',
                 'logo': 'https://user-images.githubusercontent.com/1294454/27766319-f653c6e6-5ed4-11e7-933d-f0bc3699ae8f.jpg',
-                'api': 'https://www.bitmex.com',
+                # 'api': 'https://www.bitmex.com',
+                'api': 'https://testnet.bitmex.com',
                 'www': 'https://www.bitmex.com',
                 'doc': [
                     'https://www.bitmex.com/app/apiOverview',
@@ -662,3 +663,14 @@ class bitmex (Exchange):
         request = self.deep_extend(request, params)
         response = self.privateGetPosition(request)
         return self.parse_positions(response, market, None, limit)
+
+    def edit_position_leverage(self, symbol, leverage):
+        self.load_markets()
+        request = {}
+        if symbol is not None:
+            market = self.market(symbol)
+            request['symbol'] = market['id']
+        request['leverage'] = leverage
+
+        response = self.privatePostPositionLeverage(request)
+        return response

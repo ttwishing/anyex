@@ -1307,7 +1307,7 @@ class Exchange(object):
         self.raise_error(NotSupported, details='fetch_future_position() is not implemented yet')
 
     def fetch_future_positions(self, symbol=None, since=None, limit=None, params={}):
-        self.raise_error(NotSupported, details='fetch_future_position() is not implemented yet')
+        self.raise_error(NotSupported, details='fetch_future_positions() is not implemented yet')
 
     def sign(self, path, api='public', method='GET', params={}, headers=None, body=None):
         raise NotSupported(self.id + ' sign() pure method must be redefined in derived classes')

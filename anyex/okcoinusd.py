@@ -720,13 +720,12 @@ class okcoinusd (Exchange):
             if symbol in self.markets_by_id[id]:
                 market = self.markets_by_id[id]
                 symbol = market['symbol']
-        datetime_value = None
         timestamp = None
         iso8601 = None
-        if 'timestamp' in holding:
-            datetime_value = holding['create_date']
-        if datetime_value is not None:
-            timestamp = self.parse8601(datetime_value)
+        createDateField = self.get_create_date_field()
+        if createDateField in holding:
+            timestamp = holding[createDateField]
+        if timestamp is not None:
             iso8601 = self.iso8601(timestamp)
 
         liquidation_price = self.safe_float(position, 'force_liqu_price')
