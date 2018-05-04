@@ -770,6 +770,8 @@ class okcoinusd (Exchange):
         return self.create_order(symbol, type, side, amount, price, params)
 
     def close_position(self, symbol, type=None, side=None, amount=None, price=None, params={}):
+        if params.get('contract_type') is None:
+                raise ExchangeError(self.id + ' futurePosition requires a contract_type parameter in params')
         if type == 'market':
             params['match_price'] = 1
         else:
