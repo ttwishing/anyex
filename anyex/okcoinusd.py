@@ -737,8 +737,12 @@ class okcoinusd (Exchange):
         open_sell_amount = holding['sell_amount']
         open_sell_cost = holding['sell_price_cost']
 
+        # FIXME: what if the user has two different positions?
+        amount = open_buy_amount or open_sell_amount
+
         result = {
             'info': position,
+            'amount': amount,
             'timestamp': timestamp,
             'datetime': iso8601,
             'symbol': symbol,
