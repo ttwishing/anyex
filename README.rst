@@ -262,10 +262,11 @@ The library is under `MIT license <https://github.com/anyex/anyex/blob/master/LI
 Install
 -------
 
-The easiest way to install the anyex library is to use pip:
+The easiest way to install the anyex library is to use pip,
 
 .. code:: shell
     pip install anyex
+
 
 .. code:: python
 
