@@ -3,11 +3,9 @@ anyex – ANY EXchange trading library
 
 |Build Status| |npm| |PyPI| |NPM Downloads| |NSP Status| |Gitter| |Supported Exchanges| |Open Collective|
 
-A pure Python library originated from [CCXT](https://github.com/ccxt/ccxt).
+A pure Python library originated from `CCXT <https://github.com/ccxt/ccxt>`.
 
-The **anyex** library is used to connect and trade with cryptocurrency / altcoin exchanges and payment processing services worldwide. It provides quick access to market data for storage, analysis, visualization, indicator development, algorithmic trading, strategy backtesting, bot programming, webshop integration and related software engineering.
-
-It is intended to be used by **coders, developers, technically-skilled traders, data-scientists and financial analysts** for building trading algorithms on top of it.
+An aggresive intention to wrap up as many APIs as possible from exchanges all around the world.
 
 Current feature list:
 
@@ -16,7 +14,7 @@ Current feature list:
 -  all currencies, altcoins and symbols, prices, order books, trades, tickers, etc...
 -  optional normalized data for cross-exchange or cross-currency analytics and arbitrage
 -  an out-of-the box unified all-in-one API extremely easy to integrate
--  works in Node 7.6+, Python 2 and 3, PHP 5.3+, web browsers
+-  works in Python 2 and 3
 
 `anyex on GitHub <https://github.com/anyex/anyex>`__ | Install | Usage | `Manual <https://github.com/anyex/anyex/wiki>`__ | `Examples <https://github.com/anyex/anyex/tree/master/examples>`__ | `Changelog <https://github.com/anyex/anyex/blob/master/CHANGELOG.md>`__ | `Contributing <https://github.com/anyex/anyex/blob/master/CONTRIBUTING.md>`__
 
@@ -264,65 +262,9 @@ The library is under `MIT license <https://github.com/anyex/anyex/blob/master/LI
 Install
 -------
 
-The easiest way to install the anyex library is to use builtin package managers:
-
--  `anyex in **NPM** <http://npmjs.com/package/anyex>`__ (JavaScript / Node v7.6+)
--  `anyex in **PyPI** <https://pypi.python.org/pypi/anyex>`__ (Python 2 and 3.5.3+)
--  `anyex in **Packagist/Composer** <https://packagist.org/packages/anyex/anyex>`__ (PHP 5.3+)
-
-This library is shipped as an all-in-one module implementation with minimalistic dependencies and requirements:
-
--  ```js/`` <https://github.com/anyex/anyex/blob/master/js/>`__ in JavaScript
--  ```python/`` <https://github.com/anyex/anyex/blob/master/python/>`__ in Python (generated from JS)
--  ```php/`` <https://github.com/anyex/anyex/blob/master/php/>`__ in PHP (generated from JS)
-
-You can also clone it into your project directory from `anyex GitHub repository <https://github.com/anyex/anyex>`__:
+The easiest way to install the anyex library is to use pip:
 
 .. code:: shell
-
-    git clone https://github.com/anyex/anyex.git
-
-An alternative way of installing this library into your code is to copy a single file manually into your working directory with language extension appropriate for your environment.
-
-JavaScript (NPM)
-~~~~~~~~~~~~~~~~
-
-JavaScript version of anyex works both in Node and web browsers. Requires ES6 and ``async/await`` syntax support (Node 7.6.0+). When compiling with Webpack and Babel, make sure it is `not excluded <https://github.com/anyex/anyex/issues/225#issuecomment-331905178>`__ in your ``babel-loader`` config.
-
-`anyex in **NPM** <http://npmjs.com/package/anyex>`__
-
-.. code:: shell
-
-    npm install anyex
-
-.. code:: javascript
-
-    var anyex = require ('anyex')
-
-    console.log (anyex.exchanges) // print all available exchanges
-
-JavaScript (for use with the ``<script>`` tag):
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-`All-in-one browser bundle <https://unpkg.com/anyex>`__ (dependencies included), served from `unpkg CDN <https://unpkg.com/>`__, which is a fast, global content delivery network for everything on NPM.
-
-.. code:: html
-
-    <script type="text/javascript" src="https://unpkg.com/anyex"></script>
-
-Creates a global ``anyex`` object:
-
-.. code:: javascript
-
-    console.log (anyex.exchanges) // print all available exchanges
-
-Python
-~~~~~~
-
-`anyex in **PyPI** <https://pypi.python.org/pypi/anyex>`__
-
-.. code:: shell
-
     pip install anyex
 
 .. code:: python
@@ -336,27 +278,21 @@ The library supports concurrent asynchronous mode with asyncio and async/await i
 
     import anyex.async as anyex # link against the asynchronous version of anyex
 
-PHP
-~~~
+You can also clone it into your project directory from `anyex GitHub repository <https://github.com/anyex/anyex>`__:
 
-The anyex library in PHP: `**``anyex.php``** <https://raw.githubusercontent.com/anyex/anyex/master/anyex.php>`__
+.. code:: shell
 
-It requires common PHP modules:
+    git clone https://github.com/anyex/anyex.git
 
--  cURL
--  mbstring (using UTF-8 is highly recommended)
--  PCRE
--  iconv
+An alternative way of installing this library into your code is to copy a single file manually into your working directory with language extension appropriate for your environment.
 
-.. code:: php
-
-    include "anyex.php";
-    var_dump (\anyex\Exchange::$exchanges); // print a list of all available exchange classes
 
 Documentation
 -------------
 
+Under development...
 Read the `Manual <https://github.com/anyex/anyex/wiki>`__ for more details.
+
 
 Usage
 -----
@@ -390,13 +326,13 @@ Private APIs allow the following:
 -  transfer funds between accounts
 -  use merchant services
 
-This library implements full public and private REST APIs for all exchanges. WebSocket and FIX implementations in JavaScript, PHP, Python and other languages coming soon.
+This library implements full public and private REST APIs for all exchanges. WebSocket and FIX implementations in Python.
 
-The anyex library supports both camelcase notation (preferred in JavaScript) and underscore notation (preferred in Python and PHP), therefore all methods can be called in either notation or coding style in any language.
+The anyex library supports both camelcase notation and underscore notation, therefore all methods can be called in either notation or coding style.
 
 ::
 
-    // both of these notations work in JavaScript/Python/PHP
+    // both of these notations will work
     exchange.methodName ()  // camelcase pseudocode
     exchange.method_name () // underscore pseudocode
 
@@ -404,41 +340,6 @@ Read the `Manual <https://github.com/anyex/anyex/wiki>`__ for more details.
 
 JavaScript
 ~~~~~~~~~~
-
-.. code:: javascript
-
-    'use strict';
-    const anyex = require ('anyex');
-
-    (async function () {
-        let kraken    = new anyex.kraken ()
-        let bitfinex  = new anyex.bitfinex ({ verbose: true })
-        let huobi     = new anyex.huobi ()
-        let okcoinusd = new anyex.okcoinusd ({
-            apiKey: 'YOUR_PUBLIC_API_KEY',
-            secret: 'YOUR_SECRET_PRIVATE_KEY',
-        })
-
-        console.log (kraken.id,    await kraken.loadMarkets ())
-        console.log (bitfinex.id,  await bitfinex.loadMarkets  ())
-        console.log (huobi.id,     await huobi.loadMarkets ())
-
-        console.log (kraken.id,    await kraken.fetchOrderBook (kraken.symbols[0]))
-        console.log (bitfinex.id,  await bitfinex.fetchTicker ('BTC/USD'))
-        console.log (huobi.id,     await huobi.fetchTrades ('ETH/CNY'))
-
-        console.log (okcoinusd.id, await okcoinusd.fetchBalance ())
-
-        // sell 1 BTC/USD for market price, sell a bitcoin for dollars immediately
-        console.log (okcoinusd.id, await okcoinusd.createMarketSellOrder ('BTC/USD', 1))
-
-        // buy 1 BTC/USD for $2500, you pay $2500 and receive ฿1 when the order is closed
-        console.log (okcoinusd.id, await okcoinusd.createLimitBuyOrder ('BTC/USD', 1, 2500.00))
-
-        // pass/redefine custom exchange-specific order params: type, amount, price or whatever
-        // use a custom order type
-        bitfinex.createLimitSellOrder ('BTC/USD', 1, 10, { 'type': 'trailing-stop' })
-    }) ();
 
 Python
 ~~~~~~
@@ -478,42 +379,6 @@ Python
     # pass/redefine custom exchange-specific order params: type, amount, price, flags, etc...
     kraken.create_market_buy_order('BTC/USD', 1, {'trading_agreement': 'agree'})
 
-PHP
-~~~
-
-.. code:: php
-
-    include 'anyex.php';
-
-    $poloniex = new \anyex\poloniex ();
-    $bittrex  = new \anyex\bittrex  (array ('verbose' => true));
-    $quoinex  = new \anyex\quoinex   ();
-    $zaif     = new \anyex\zaif     (array (
-        'apiKey' => 'YOUR_PUBLIC_API_KEY',
-        'secret' => 'YOUR_SECRET_PRIVATE_KEY',
-    ));
-
-    $poloniex_markets = $poloniex->load_markets ();
-
-    var_dump ($poloniex_markets);
-    var_dump ($bittrex->load_markets ());
-    var_dump ($quoinex->load_markets ());
-
-    var_dump ($poloniex->fetch_order_book ($poloniex->symbols[0]));
-    var_dump ($bittrex->fetch_trades ('BTC/USD'));
-    var_dump ($quoinex->fetch_ticker ('ETH/EUR'));
-    var_dump ($zaif->fetch_ticker ('BTC/JPY'));
-
-    var_dump ($zaif->fetch_balance ());
-
-    // sell 1 BTC/JPY for market price, you pay ¥ and receive ฿ immediately
-    var_dump ($zaif->id, $zaif->create_market_sell_order ('BTC/JPY', 1));
-
-    // buy BTC/JPY, you receive ฿1 for ¥285000 when the order closes
-    var_dump ($zaif->id, $zaif->create_limit_buy_order ('BTC/JPY', 1, 285000));
-
-    // set a custom user-defined id to your order
-    $hitbtc->create_order ('BTC/USD', 'limit', 'buy', 1, 3000, array ('clientOrderId' => '123'));
 
 Contributing
 ------------
@@ -542,10 +407,8 @@ Crypto
 
 ::
 
-    ETH 0xa7c2b18b7c8b86984560cad3b1bc3224b388ded0
-    BTC 33RmVRfhK2WZVQR1R83h2e9yXoqRNDvJva
-    BCH 1GN9p233TvNcNQFthCgfiHUnj5JRKEc2Ze
-    LTC LbT8mkAqQBphc4yxLXEDgYDfEax74et3bP
+    ETH 0x967e14c5796754803293C8c91A0c0646A5232B48
+    BTC 
 
 Thank you!
 
