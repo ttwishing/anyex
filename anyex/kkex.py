@@ -149,20 +149,21 @@ class kkex (Exchange):
             })
         return result
 
-    # def fetch_balance(self, params={}):
-    #     self.load_markets()
-    #     balances = self.privateGetAccounts()
-    #     result = {'info': balances}
-    #     for b in range(0, len(balances)):
-    #         balance = balances[b]
-    #         currency = balance['currency']
-    #         account = {
-    #             'free': self.safe_float(balance, 'available'),
-    #             'used': self.safe_float(balance, 'hold'),
-    #             'total': self.safe_float(balance, 'balance'),
-    #         }
-    #         result[currency] = account
-    #     return self.parse_balance(result)
+    def fetch_balance(self, params={}):
+        self.load_markets()
+        response = self.privatePostV2Userinfo()
+        return
+        result = {'info': balances}
+        for b in range(0, len(balances)):
+            balance = balances[b]
+            currency = balance['currency']
+            account = {
+                'free': self.safe_float(balance, 'available'),
+                'used': self.safe_float(balance, 'hold'),
+                'total': self.safe_float(balance, 'balance'),
+            }
+            result[currency] = account
+        return self.parse_balance(result)
 
     # def fetch_order_book(self, symbol, limit=None, params={}):
     #     self.load_markets()
@@ -499,33 +500,26 @@ class kkex (Exchange):
     #         'id': response['id'],
     #     }
 
-    # def sign(self, path, api='public', method='GET', params={}, headers=None, body=None):
-    #     request = '/' + self.implode_params(path, params)
-    #     query = self.omit(params, self.extract_params(path))
-    #     if method == 'GET':
-    #         if query:
-    #             request += '?' + self.urlencode(query)
-    #     url = self.urls['api'] + request
-    #     if api == 'private':
-    #         self.check_required_credentials()
-    #         nonce = str(self.nonce())
-    #         payload = ''
-    #         if method != 'GET':
-    #             if query:
-    #                 body = self.json(query)
-    #                 payload = body
-    #         # payload = body if (body) else ''
-    #         what = nonce + method + request + payload
-    #         secret = base64.b64decode(self.secret)
-    #         signature = self.hmac(self.encode(what), secret, hashlib.sha256, 'base64')
-    #         headers = {
-    #             'CB-ACCESS-KEY': self.apiKey,
-    #             'CB-ACCESS-SIGN': self.decode(signature),
-    #             'CB-ACCESS-TIMESTAMP': nonce,
-    #             'CB-ACCESS-PASSPHRASE': self.password,
-    #             'Content-Type': 'application/json',
-    #         }
-    #     return {'url': url, 'method': method, 'body': body, 'headers': headers}
+    def nonce(self):
+        return self.milliseconds()
+
+    def sign(self, path, api='public', method='GET', params={}, headers=None, body=None):
+        url = '/'
+        url += path
+        if api == 'private':
+            self.check_required_credentials()
+            query = self.keysort(self.extend({
+                'api_key': self.apiKey,
+                'nonce': self.nonce(),
+            }, params))
+            # secret key must be at the end of query
+            queryString = self.rawencode(query) + '&secret_key=' + self.secret
+            query['sign'] = self.hash(self.encode(queryString)).upper()
+            body = self.urlencode(query)
+            headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+            url += '?' + self.urlencode(query)
+        url = self.urls['api'] + url
+        return {'url': url, 'method': method, 'body': body, 'headers': headers}
 
     # def handle_errors(self, code, reason, url, method, headers, body):
     #     if (code == 400) or (code == 404):
