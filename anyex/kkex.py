@@ -152,64 +152,59 @@ class kkex (Exchange):
     def fetch_balance(self, params={}):
         self.load_markets()
         response = self.privatePostV2Userinfo()
-        return
-        result = {'info': balances}
-        for b in range(0, len(balances)):
-            balance = balances[b]
-            currency = balance['currency']
-            account = {
-                'free': self.safe_float(balance, 'available'),
-                'used': self.safe_float(balance, 'hold'),
-                'total': self.safe_float(balance, 'balance'),
-            }
+        result = {'info': response}
+        currencies = list(self.currencies.keys())
+        balances = response['info']['funds']
+        for i in range(0, len(currencies)):
+            currency = currencies[i]
+            account = self.account()
+            if currency in balances['freezed']:
+                account['free'] = balances['free'][currency]
+                account['used'] = balances['freezed'][currency]
+                account['total'] = account['free'] + account['used']
             result[currency] = account
         return self.parse_balance(result)
 
-    # def fetch_order_book(self, symbol, limit=None, params={}):
-    #     self.load_markets()
-    #     orderbook = self.publicGetProductsIdBook(self.extend({
-    #         'id': self.market_id(symbol),
-    #         'level': 2,  # 1 best bidask, 2 aggregated, 3 full
-    #     }, params))
-    #     return self.parse_order_book(orderbook)
+    def fetch_order_book(self, symbol, limit=None, params={}):
+        self.load_markets()
+        market = self.market(symbol)
+        request = {
+            'symbol': market['id'],
+            # 'merge': 0.00000001
+        }
+        orderbook = self.publicGetV1Depth(self.extend(request, params))
+        return self.parse_order_book(orderbook)
 
-    # def fetch_ticker(self, symbol, params={}):
-    #     self.load_markets()
-    #     market = self.market(symbol)
-    #     request = self.extend({
-    #         'id': market['id'],
-    #     }, params)
-    #     ticker = self.publicGetProductsIdTicker(request)
-    #     timestamp = self.parse8601(ticker['time'])
-    #     bid = None
-    #     ask = None
-    #     if 'bid' in ticker:
-    #         bid = self.safe_float(ticker, 'bid')
-    #     if 'ask' in ticker:
-    #         ask = self.safe_float(ticker, 'ask')
-    #     last = self.safe_float(ticker, 'price')
-    #     return {
-    #         'symbol': symbol,
-    #         'timestamp': timestamp,
-    #         'datetime': self.iso8601(timestamp),
-    #         'high': None,
-    #         'low': None,
-    #         'bid': bid,
-    #         'bidVolume': None,
-    #         'ask': ask,
-    #         'askVolume': None,
-    #         'vwap': None,
-    #         'open': None,
-    #         'close': last,
-    #         'last': last,
-    #         'previousClose': None,
-    #         'change': None,
-    #         'percentage': None,
-    #         'average': None,
-    #         'baseVolume': self.safe_float(ticker, 'volume'),
-    #         'quoteVolume': None,
-    #         'info': ticker,
-    #     }
+    def fetch_ticker(self, symbol, params={}):
+        self.load_markets()
+        market = self.market(symbol)
+        request = self.extend({
+            'symbol': market['id'],
+        }, params)
+        response = self.publicGetV1Ticker(request)
+        ticker = response['ticker']
+        return {
+            'symbol': symbol,
+            'timestamp': response['date'],
+            'datetime': self.iso8601(response['date'] * 1000),
+            'high': self.safe_float(ticker, 'high'),
+            'low': self.safe_float(ticker, 'low'),
+            'bid': self.safe_float(ticker, 'buy'),
+            'bidVolume': None,
+            'ask': self.safe_float(ticker, 'sell'),
+            'askVolume': None,
+            'vwap': None,
+            'open': self.safe_float(ticker, 'open'),
+            'close': None,
+            'last': self.safe_float(ticker, 'last'),
+            'previousClose': None,
+            'change': None,
+            'percentage': None,
+            'average': None,
+            'baseVolume': self.safe_float(ticker, 'vol'),
+            'quoteVolume': None,
+            'info': ticker,
+        }
 
     # def parse_trade(self, trade, market=None):
     #     timestamp = None
@@ -518,6 +513,9 @@ class kkex (Exchange):
             body = self.urlencode(query)
             headers = {'Content-Type': 'application/x-www-form-urlencoded'}
             url += '?' + self.urlencode(query)
+        else:
+            if params:
+                url += '?' + self.urlencode(params)
         url = self.urls['api'] + url
         return {'url': url, 'method': method, 'body': body, 'headers': headers}
 
