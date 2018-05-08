@@ -132,6 +132,7 @@ from anyex.independentreserve import independentreserve      # noqa: F401
 from anyex.indodax import indodax                            # noqa: F401
 from anyex.itbit import itbit                                # noqa: F401
 from anyex.jubi import jubi                                  # noqa: F401
+from anyex.kkex import kkex                                  # noqa: F401
 from anyex.kraken import kraken                              # noqa: F401
 from anyex.kucoin import kucoin                              # noqa: F401
 from anyex.kuna import kuna                                  # noqa: F401
@@ -248,6 +249,7 @@ exchanges = [
     'indodax',
     'itbit',
     'jubi',
+    'kkex',
     'kraken',
     'kucoin',
     'kuna',
