@@ -120,8 +120,8 @@ class kkex (Exchange):
             limits = {
                 # kkex has both bid_amount and bid_size limits
                 'amount': {
-                    'min': self.safe_float(market, 'max_bid_amount'),
-                    'max': self.safe_float(market, 'min_bid_amount'),
+                    'min': self.safe_float(market, 'min_bid_size'),
+                    'max': self.safe_float(market, 'max_bid_size'),
                 },
                 'price': {
                     'min': self.safe_float(market, 'min_price'),
@@ -205,6 +205,126 @@ class kkex (Exchange):
             'quoteVolume': None,
             'info': ticker,
         }
+
+    def parse_order_status(self, status):
+        statuses = {
+            0: 'open',
+            1: 'open',
+            2: 'closed',
+            4: 'open',
+            -1: 'canceled',
+        }
+        return self.safe_string(statuses, status, status)
+
+    def parse_order(self, order, market=None):
+        timestamp = order['create_date']
+        symbol = order['symbol']
+        status = self.parse_order_status(order['status'])
+        price = self.safe_float(order, 'price')
+        amount = self.safe_float(order, 'amount')
+        filled = self.safe_float(order, 'deal_amount')
+        remaining = amount - filled
+        cost = None
+        fee = None
+        if market:
+            symbol = market['symbol']
+        return {
+            'id': order['order_id'],
+            'info': order,
+            'timestamp': timestamp,
+            'datetime': self.iso8601(timestamp),
+            'lastTradeTimestamp': None,
+            'status': status,
+            'symbol': symbol,
+            'type': 'market' if order['type'].endswith('market') else 'limit',
+            'side': order['type'],
+            'price': price,
+            'cost': cost,
+            'amount': amount,
+            'filled': filled,
+            'remaining': remaining,
+            'fee': fee,
+        }
+
+    def fetch_order(self, id, symbol=None, params={}):
+        self.load_markets()
+        market = self.market(symbol)
+        order = {
+            'order_id': id,
+            'symbol': self.market_id(symbol)
+        }
+        response = self.privatePostV2OrderInfo(self.extend(order, params))
+        return self.parse_order(response['order'], market)
+
+    def fetch_orders(self, order_ids=[], symbol=None, since=None, limit=None, params={}):
+        self.load_markets()
+        market = self.market(symbol)
+        if not isinstance(order_ids, list):
+            raise ExchangeError(self.id + ' order_ids should be a list!')
+
+        order_ids = ','.join([str(i) for i in order_ids])
+        orders = {
+            'symbol': self.market_id(symbol),
+            'order_id': order_ids
+        }
+        response = self.privatePostV2OrdersInfo(self.extend(orders, params))
+        return self.parse_orders(response['orders'], market, since, limit)
+
+    def create_order(self, symbol, type, side, amount, price=None, params={}):
+        self.load_markets()
+        order = {
+            'symbol': self.market_id(symbol),
+            'side': side,
+            'amount': amount,
+            'type': side,
+            'price': price
+        }
+        if type == 'market':
+            order['type'] = side + '_market'
+        response = self.privatePostV2Trade(self.extend(order, params))
+        return {
+            'info': response,
+            'id': response['order_id']
+        }
+
+    def cancel_order(self, id, symbol=None, params={}):
+        self.load_markets()
+        order = {
+            'order_id': id,
+            'symbol': self.market_id(symbol),
+        }
+        return self.privatePostV2CancelOrder(self.extend(order, params))
+
+    def cancel_orders(self, symbol=None, params={}):
+        self.load_markets()
+        order = {
+            'symbol': self.market_id(symbol)
+        }
+        return self.privatePostV2CancelAllOrders(self.extend(order, params))
+
+    def nonce(self):
+        return self.milliseconds()
+
+    def sign(self, path, api='public', method='GET', params={}, headers=None, body=None):
+        url = '/'
+        url += path
+        if api == 'private':
+            self.check_required_credentials()
+            query = self.keysort(self.extend({
+                'api_key': self.apiKey,
+                'nonce': self.nonce(),
+            }, params))
+            # secret key must be at the end of query
+            queryString = self.rawencode(query) + '&secret_key=' + self.secret
+            query['sign'] = self.hash(self.encode(queryString)).upper()
+            body = self.urlencode(query)
+            headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+            url += '?' + self.urlencode(query)
+        else:
+            if params:
+                url += '?' + self.urlencode(params)
+        url = self.urls['api'] + url
+        return {'url': url, 'method': method, 'body': body, 'headers': headers}
 
     # def parse_trade(self, trade, market=None):
     #     timestamp = None
@@ -306,126 +426,6 @@ class kkex (Exchange):
     #     response = self.publicGetProductsIdCandles(self.extend(request, params))
     #     return self.parse_ohlcvs(response, market, timeframe, since, limit)
 
-    # def fetch_time(self):
-    #     response = self.publicGetTime()
-    #     return self.parse8601(response['iso'])
-
-    # def parse_order_status(self, status):
-    #     statuses = {
-    #         'pending': 'open',
-    #         'active': 'open',
-    #         'open': 'open',
-    #         'done': 'closed',
-    #         'canceled': 'canceled',
-    #     }
-    #     return self.safe_string(statuses, status, status)
-
-    # def parse_order(self, order, market=None):
-    #     timestamp = self.parse8601(order['created_at'])
-    #     symbol = None
-    #     if not market:
-    #         if order['product_id'] in self.markets_by_id:
-    #             market = self.markets_by_id[order['product_id']]
-    #     status = self.parse_order_status(order['status'])
-    #     price = self.safe_float(order, 'price')
-    #     amount = self.safe_float(order, 'size')
-    #     if amount is None:
-    #         amount = self.safe_float(order, 'funds')
-    #     if amount is None:
-    #         amount = self.safe_float(order, 'specified_funds')
-    #     filled = self.safe_float(order, 'filled_size')
-    #     remaining = None
-    #     if amount is not None:
-    #         if filled is not None:
-    #             remaining = amount - filled
-    #     cost = self.safe_float(order, 'executed_value')
-    #     fee = {
-    #         'cost': self.safe_float(order, 'fill_fees'),
-    #         'currency': None,
-    #         'rate': None,
-    #     }
-    #     if market:
-    #         symbol = market['symbol']
-    #     return {
-    #         'id': order['id'],
-    #         'info': order,
-    #         'timestamp': timestamp,
-    #         'datetime': self.iso8601(timestamp),
-    #         'lastTradeTimestamp': None,
-    #         'status': status,
-    #         'symbol': symbol,
-    #         'type': order['type'],
-    #         'side': order['side'],
-    #         'price': price,
-    #         'cost': cost,
-    #         'amount': amount,
-    #         'filled': filled,
-    #         'remaining': remaining,
-    #         'fee': fee,
-    #     }
-
-    # def fetch_order(self, id, symbol=None, params={}):
-    #     self.load_markets()
-    #     response = self.privateGetOrdersId(self.extend({
-    #         'id': id,
-    #     }, params))
-    #     return self.parse_order(response)
-
-    # def fetch_orders(self, symbol=None, since=None, limit=None, params={}):
-    #     self.load_markets()
-    #     request = {
-    #         'status': 'all',
-    #     }
-    #     market = None
-    #     if symbol:
-    #         market = self.market(symbol)
-    #         request['product_id'] = market['id']
-    #     response = self.privateGetOrders(self.extend(request, params))
-    #     return self.parse_orders(response, market, since, limit)
-
-    # def fetch_open_orders(self, symbol=None, since=None, limit=None, params={}):
-    #     self.load_markets()
-    #     request = {}
-    #     market = None
-    #     if symbol:
-    #         market = self.market(symbol)
-    #         request['product_id'] = market['id']
-    #     response = self.privateGetOrders(self.extend(request, params))
-    #     return self.parse_orders(response, market, since, limit)
-
-    # def fetch_closed_orders(self, symbol=None, since=None, limit=None, params={}):
-    #     self.load_markets()
-    #     request = {
-    #         'status': 'done',
-    #     }
-    #     market = None
-    #     if symbol:
-    #         market = self.market(symbol)
-    #         request['product_id'] = market['id']
-    #     response = self.privateGetOrders(self.extend(request, params))
-    #     return self.parse_orders(response, market, since, limit)
-
-    # def create_order(self, symbol, type, side, amount, price=None, params={}):
-    #     self.load_markets()
-    #     # oid = str(self.nonce())
-    #     order = {
-    #         'product_id': self.market_id(symbol),
-    #         'side': side,
-    #         'size': amount,
-    #         'type': type,
-    #     }
-    #     if type == 'limit':
-    #         order['price'] = price
-    #     response = self.privatePostOrders(self.extend(order, params))
-    #     return {
-    #         'info': response,
-    #         'id': response['id'],
-    #     }
-
-    # def cancel_order(self, id, symbol=None, params={}):
-    #     self.load_markets()
-    #     return self.privateDeleteOrdersId({'id': id})
-
     # def fee_to_precision(self, currency, fee):
     #     cost = float(fee)
     #     return('{:.' + str(self.currencies[currency].precision) + 'f}').format(cost)
@@ -495,30 +495,6 @@ class kkex (Exchange):
     #         'id': response['id'],
     #     }
 
-    def nonce(self):
-        return self.milliseconds()
-
-    def sign(self, path, api='public', method='GET', params={}, headers=None, body=None):
-        url = '/'
-        url += path
-        if api == 'private':
-            self.check_required_credentials()
-            query = self.keysort(self.extend({
-                'api_key': self.apiKey,
-                'nonce': self.nonce(),
-            }, params))
-            # secret key must be at the end of query
-            queryString = self.rawencode(query) + '&secret_key=' + self.secret
-            query['sign'] = self.hash(self.encode(queryString)).upper()
-            body = self.urlencode(query)
-            headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-            url += '?' + self.urlencode(query)
-        else:
-            if params:
-                url += '?' + self.urlencode(params)
-        url = self.urls['api'] + url
-        return {'url': url, 'method': method, 'body': body, 'headers': headers}
-
     # def handle_errors(self, code, reason, url, method, headers, body):
     #     if (code == 400) or (code == 404):
     #         if body[0] == '{':
@@ -537,9 +513,3 @@ class kkex (Exchange):
     #                 raise AuthenticationError(error)
     #             raise ExchangeError(self.id + ' ' + message)
     #         raise ExchangeError(self.id + ' ' + body)
-
-    # def request(self, path, api='public', method='GET', params={}, headers=None, body=None):
-    #     response = self.fetch2(path, api, method, params, headers, body)
-    #     if 'message' in response:
-    #         raise ExchangeError(self.id + ' ' + self.json(response))
-    #     return response

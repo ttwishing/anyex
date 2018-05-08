@@ -1,7 +1,7 @@
 anyex – ANY EXchange trading library
 ==============================================
 
-|Build Status| |npm| |PyPI| |NPM Downloads| |NSP Status| |Gitter| |Supported Exchanges| |Open Collective|
+|Build Status| |PyPI| |NSP Status| |Gitter| |Supported Exchanges|
 
 A pure Python library originated from `CCXT <https://github.com/ccxt/ccxt>`.
 
