@@ -44,7 +44,7 @@ class kkex (Exchange):
                 '1d': 86400,
             },
             'urls': {
-                'api': 'https://kkex.com/api',
+                'api': 'https://kkex.vip/api',
                 'www': 'https://www.kkex.com',
                 'doc': 'https://kkex.com/api_wiki/',
                 'fees': [
@@ -159,9 +159,9 @@ class kkex (Exchange):
             currency = currencies[i]
             account = self.account()
             if currency in balances['freezed']:
-                account['free'] = balances['free'][currency]
-                account['used'] = balances['freezed'][currency]
-                account['total'] = account['free'] + account['used']
+                account['free'] = float(balances['free'][currency])
+                account['used'] = float(balances['freezed'][currency])
+                account['total'] = float(account['free']) + float(account['used'])
             result[currency] = account
         return self.parse_balance(result)
 
@@ -170,10 +170,11 @@ class kkex (Exchange):
         market = self.market(symbol)
         request = {
             'symbol': market['id'],
+            'size': 20
             # 'merge': 0.00000001
         }
         orderbook = self.publicGetV1Depth(self.extend(request, params))
-        return self.parse_order_book(orderbook)
+        return self.parse_order_book(orderbook, self.msec())
 
     def fetch_ticker(self, symbol, params={}):
         self.load_markets()
