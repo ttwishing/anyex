@@ -44,7 +44,7 @@ class kkex (Exchange):
                 '1d': 86400,
             },
             'urls': {
-                'api': 'https://kkex.vip/api',
+                'api': 'https://kkex.com/api',
                 'www': 'https://www.kkex.com',
                 'doc': 'https://kkex.com/api_wiki/',
                 'fees': [
