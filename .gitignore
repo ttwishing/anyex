@@ -96,3 +96,4 @@ secrets*
 *.rdb
 
 ideas/
+test_*

@@ -169,6 +169,7 @@ from anyex.yobit import yobit                                # noqa: F401
 from anyex.yunbi import yunbi                                # noqa: F401
 from anyex.zaif import zaif                                  # noqa: F401
 from anyex.zb import zb                                      # noqa: F401
+from anyex.bigone import bigone                                      # noqa: F401
 
 exchanges = [
     '_1broker',
