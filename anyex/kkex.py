@@ -186,7 +186,7 @@ class kkex (Exchange):
         ticker = response['ticker']
         return {
             'symbol': symbol,
-            'timestamp': response['date'],
+            'timestamp': response['date'] * 1000,
             'datetime': self.iso8601(response['date'] * 1000),
             'high': self.safe_float(ticker, 'high'),
             'low': self.safe_float(ticker, 'low'),
